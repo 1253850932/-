@@ -1,25 +1,40 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
 
 const routes = [
-  {
-    path: '/',
-    name: 'home',
-    component: HomeView
-  },
-  {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
-  }
+    // 一级路由布局
+    {
+        path: '/',
+        component: () => import('@/views/Layout'),
+        children: [
+            {
+                path: '/',
+                component: () => import('@/views/home/index')
+            },
+            {
+                path: '/category/:id',
+                component: () => import('@/views/category')
+            },
+            {
+                path: '/category/sub/:id',
+                component: () => import('@/views/category/sub')
+            },
+            {
+                path: '/product/:id',
+                component: () => import('@/views/goods/index')
+            }
+        ]
+    },
+    { path: '/login', component: () => import('@/views/login/index') }
 ]
 
 const router = createRouter({
-  history: createWebHashHistory(),
-  routes
+    // 使用hash方式实现路由
+    history: createWebHashHistory(),
+    routes,
+    // 每次切换路由的时候滚动到页面顶部
+    scrollBehavior() {
+        return { left: 0, top: 0 }
+    }
 })
 
 export default router
