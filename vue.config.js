@@ -2,8 +2,7 @@ const { defineConfig } = require('@vue/cli-service')
 const path = require('path')
 module.exports = defineConfig({
     transpileDependencies: true,
-    lintOnSave: false,
-
+    lintOnSave: true,
     pluginOptions: {
         'style-resources-loader': {
             preProcessor: 'less',
